@@ -39,6 +39,10 @@ class Network:
         self.layer_list.append(layer)
 
     def build_network(self):
+        """
+        Initializes the directed acyclic graph based on the layer objects in layer list
+        """
+
         # loop over all the layers in the model and build the network
         for (i, layer) in enumerate(self.layer_list):
             if layer.__class__.__name__ == "Input":
@@ -63,3 +67,19 @@ class Network:
                 node.layer.init_layer(input_shape = node.prev.layer.output_shape)
             except:
                 node.layer.init_layer()
+
+    def forward_pass(self, x_train):
+        # loop over all the nodes in the graph for the forward pass
+        output = x_train
+        for node in self.nodes:
+            output = node.layer.forward_call(output)
+
+        return output
+
+    def backward_pass(self, input):
+        # loop over all the nodes in the graph for the forward pass
+        output = input
+        for node in reversed(self.nodes):
+            output = node.layer.backward_call(output)
+
+        return output
