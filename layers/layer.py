@@ -9,7 +9,7 @@ class Layer(ABC):
 
     def __init__(self, name = None):
         # call the parent class constructor
-        super().__init__()
+        super(Layer, self).__init__()
 
         # update the layer index
         Layer.layer_index = Layer.layer_index + 1
@@ -25,10 +25,21 @@ class Layer(ABC):
         self.output_shape = None
         self.weights = None
         self.bias = None
+        self.cache = None
+        self.gradients = {"W": None, "b" : None}
 
-    @abstractmethod
     def set_input_shape(self, input_shape = None):
-        pass
+        # set the layer's input shape
+        self.input_shape = input_shape
+
+    def set_gradients(self):
+        # set the corresponding dictionary keys with zero initialized arrays
+        try:
+            self.gradients["W"] = np.zeros(self.weights.shape)
+            self.gradients["b"] = np.zeros(self.bias.shape)
+        except:
+            self.gradients["W"] = None
+            self.gradients["b"] = None
 
     @abstractmethod
     def set_output_shape(self):
@@ -38,13 +49,13 @@ class Layer(ABC):
     def init_layer(self, input_shape = None):
         pass
 
-    # @abstractmethod
-    # def call_forward(self):
-    #     pass
-    #
-    # @abstractmethod
-    # def call_backward(self):
-    #     pass
+    @abstractmethod
+    def forward_call(self, input):
+        pass
+
+    @abstractmethod
+    def backward_call(self, input):
+        pass
     #
     # @abstractmethod
     # def get_weights_shape(self):
