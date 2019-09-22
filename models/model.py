@@ -6,7 +6,7 @@ import numpy as np
 class Model(Network):
     def __init__(self):
         # call the parent class constructor
-        super().__init__()
+        super(Model, self).__init__()
 
         # initialize all model attributes
         self.metrics = {}
@@ -32,5 +32,13 @@ class Model(Network):
         for metric_name in metrics:
             self.metrics[metric_name] = []
 
-    # def fit(self):
+    def fit(self, x_train, y_train):
+        output = self.forward_pass(x_train)
+        print("[INFO] After forward pass, output shape: {}".format(output.shape))
+        output = self.backward_pass(output)
+
+
+        print("[INFO] final output shape: {}".format(output.shape))
+        # print("[INFO] final output: {}".format(output))
+
     # def predict(self):
