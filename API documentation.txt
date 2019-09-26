@@ -1,0 +1,43 @@
+Initializing the model:
+model = AlexNet.build(height, width, depth, classes)
+
+AlexNet build class:
+1) Instantiate model object
+2) Construct the network architecture
+3) Return the constructed network architecture
+
+Classes List:
+1) Model class: characteristics common to all models
+
+                Variables:
+                1) weights - dictionary of numpy arrays (L x [layer_weights_shape])
+                2) metrics  - dictionary containing the various training metrics
+                3) loss function - object of corresponding loss function class
+                4) optimizer - object of corresponding optimizer class
+                5) layer list - list of objects of various layer class
+
+                Methods:
+                1) add - appends the corresponding layer object to layer list
+                2) compile:
+                    - initialize all model variables
+                    - initialize all layers
+                3) fit
+                4) predict
+
+2) Layer class: characteristics common to all layers
+
+                Variables:
+                1) layer_index - class variable to keep track of number of instances
+
+                Methods:
+                1) call - layer logic
+                2) initialize:
+                    - calculate the input and output tensor shapes
+                    - initialize and allocate memory for all weight tensors
+                2) get_weights_shape - returns the weight matrix shape of the current layer
+                3) get_bias_shape - returns the bias vector shape of the current layer
+
+
+2) Classes for each loss function
+3) Classes for each optimizer
+4) Classes for each layer

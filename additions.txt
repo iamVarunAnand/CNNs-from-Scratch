@@ -1,0 +1,1 @@
+1. Change the name creation logic from Layer class to individual layer's class
