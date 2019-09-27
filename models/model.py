@@ -62,7 +62,7 @@ class Model(Network):
                 # forward pass
                 y_pred = self.forward_pass(x_batch)
 
-                # calculate the total cost
+                # # calculate the total cost
                 self.cost = self.cost + self.calc_loss(y_batch, y_pred)
 
                 # initialize the initial derivative

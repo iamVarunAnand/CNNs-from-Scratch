@@ -1,5 +1,5 @@
 # import the necessary packages
-
+from layers.core import *
 
 class Node:
     """
@@ -35,8 +35,43 @@ class Network:
         self.nodes = []
 
     def add_to_network(self, layer):
-        # append the layer to the layer list
-        self.layer_list.append(layer)
+        # check if the current layer is Conv2D
+        if layer.__class__.__name__ == "Conv2D":
+            # initialize the pre-reshape layer
+            pre_reshape_layer = PreConvReshape(filters = layer.filters, kernel_size =
+            layer.kernel_size, stride = layer.stride, name = "pre_reshape_" + layer.name)
+
+            # initialize the post-reshape layer
+            post_reshape_layer = PostConvReshape(filters = layer.filters,
+                                                 name = "post_reshape_" + layer.name)
+
+            # add the pre reshape layer to the layer list
+            self.layer_list.append(pre_reshape_layer)
+
+            # add the convolutional layer to the layer list
+            self.layer_list.append(layer)
+
+            # add the post reshape layer to the layer list
+            self.layer_list.append(post_reshape_layer)
+        elif layer.__class__.__name__ == "MaxPooling2D":
+            # initialize the pre-reshape layer
+            pre_reshape_layer = PrePoolReshape(kernel_size = layer.kernel_size, stride =
+            layer.kernel_size, name = "pre_reshape_" + layer.name)
+
+            # initialize the post-reshape layer
+            post_reshape_layer = PostPoolReshape(name = "post_reshape_" + layer.name)
+
+            # add the pre reshape layer to the layer list
+            self.layer_list.append(pre_reshape_layer)
+
+            # add the pooling layer to the layer list
+            self.layer_list.append(layer)
+
+            # add the post reshape layer to the layer list
+            self.layer_list.append(post_reshape_layer)
+        else:
+            # append the layer to the layer list
+            self.layer_list.append(layer)
 
     def build_network(self):
         """

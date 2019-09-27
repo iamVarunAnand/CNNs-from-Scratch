@@ -14,7 +14,7 @@ np.random.seed(5)
 
 def build_model():
     model = Model()
-    model.add(Input(input_shape = (28, 28, 1)))
+    model.add(Input(input_shape = (128, 28, 28, 1)))
     model.add(Conv2D(filters = 32, kernel_size = (3, 3), stride = (1, 1), padding_type = "same"))
     model.add(ReLU())
     model.add(MaxPooling2D(kernel_size = (2, 2)))

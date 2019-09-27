@@ -43,10 +43,12 @@ import concurrent.futures
 
 # # ========================= multiple training examples - forward =========================
 
-m = 1
+np.random.seed(7)
 
-input_shape = (m, 5, 5, 1)
-weights_shape = (4, 3, 3, 1)
+m = 128
+
+input_shape = (m, 28, 28, 1)
+weights_shape = (64, 3, 3, 1)
 output_shape = (m, input_shape[1], input_shape[2], weights_shape[0])
 
 # initialize the tensors
@@ -82,29 +84,28 @@ def extract_sub_inputs():
             w_start = j
             w_end = j + 3
 
-            sub_inputs[i * 3 + j] = input_tensor_[:, h_start : h_end, w_start : w_end, :]
+            sub_inputs[i * 28 + j] = input_tensor_[:, h_start : h_end, w_start : w_end, :]
 
     return sub_inputs
 
 sub_inputs = extract_sub_inputs()
+sub_inputs = sub_inputs[:, :, np.newaxis, :, :, :]
 
-# sub_inputs = sub_inputs[:, :, np.newaxis, :, :]
-#
-# start_time = time.time()
-#
-# pool = mp.Pool(8)
-# result = pool.map(multiple_forward, sub_inputs)
-#
-# end_time = time.time()
-#
-# result = np.swapaxes(np.array(result), 0, 1)
-# result = np.reshape(result, (result.shape[0], 5, 5, 4))
-#
-# print("[INFO] shape of the result = {}".format(result.shape))
-# print("[INFO] time taken = {}".format(end_time - start_time))
-#
-# # checking result
-# print(result[0, :, :, 0])
+start_time = time.time()
+
+pool = mp.Pool(8)
+result = pool.map(multiple_forward, sub_inputs)
+
+end_time = time.time()
+
+result = np.swapaxes(np.array(result), 0, 1)
+result = np.reshape(result, (result.shape[0], 28, 28, 64))
+
+print("[INFO] shape of the result = {}".format(result.shape))
+print("[INFO] time taken = {}".format(end_time - start_time))
+
+# checking result
+print(result[0, :, :, 0])
 
 # print(result[0].shape)
 

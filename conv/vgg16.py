@@ -1,14 +1,14 @@
 # import the necessary packages
-from project.models import Model
-from project.layers.convolutional import Conv2D, MaxPooling2D
-from project.layers.core import Input, Dense, Flatten
-from project.layers.activation import ReLU, Softmax
+from models import Model
+from layers.convolutional import Conv2D, MaxPooling2D
+from layers.core import Input, Dense, Flatten
+from layers.activation import ReLU, Softmax
 
 class VGG16:
     @staticmethod
-    def build(height, width, depth, classes):
+    def build(height, width, depth, classes, batch_size):
         # calculate the input shape
-        input_shape = (height, width, depth)
+        input_shape = (batch_size, height, width, depth)
 
         # instantiate the model
         model = Model()
@@ -68,10 +68,10 @@ class VGG16:
         model.add(MaxPooling2D(kernel_size = (2, 2), stride = (2, 2), name = "pool_5"))
 
         # flatten layer
-        model.add(Flatten())
+        model.add(Flatten(name = "flatten"))
 
         # softmax classifier
-        model.add(Dense(units = 10, name = "dense_1"))
+        model.add(Dense(units = classes, name = "dense_1"))
         model.add(Softmax(name = "softmax_1"))
 
         # return the constructed model architecture
