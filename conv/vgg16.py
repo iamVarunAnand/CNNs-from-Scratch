@@ -7,7 +7,7 @@ from layers.activation import ReLU, Softmax
 class VGG16:
     @staticmethod
     def build(height, width, depth, classes, batch_size):
-        # calculate the input shape
+        # construct the input shape tuple
         input_shape = (batch_size, height, width, depth)
 
         # instantiate the model

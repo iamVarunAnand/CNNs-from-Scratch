@@ -249,7 +249,8 @@ class PreConvReshape(Layer):
                 output[:, h_start : h_end, w_start : w_end, :] += input[self.__get_sub_input_index(i, j)]
 
         # return the calculated value
-        return output
+        (hp, wp) = self.padding
+        return output[:, hp : -hp, wp : -wp, :]
 
 class PostConvReshape(Layer):
     def __init__(self, filters, name = None):
@@ -443,4 +444,3 @@ class PostPoolReshape(Layer):
 
         # return the calculated value
         return output
-
