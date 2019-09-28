@@ -21,7 +21,11 @@ class Input(Layer):
         self.output_shape = self.input_shape
 
     def init_layer(self, input_shape = None):
+<<<<<<< HEAD
         # print(self.name, "input_shape = ", self.input_shape, sep = " ")
+=======
+        print(self.name, "input_shape = ", self.input_shape, sep = " ")
+>>>>>>> refs/remotes/origin/master
 
         # initialize the weight and bias matrices
         self.weights = None
@@ -33,7 +37,11 @@ class Input(Layer):
         # set the layer's gradients
         self.set_gradients()
 
+<<<<<<< HEAD
         # print(self.name, "output_shape = ", self.output_shape, sep = " ")
+=======
+        print(self.name, "output_shape = ", self.output_shape, sep = " ")
+>>>>>>> refs/remotes/origin/master
 
     def forward_call(self, input):
         # return the input unchanged
@@ -55,12 +63,17 @@ class Dense(Layer):
 
     def set_output_shape(self):
         # set the layer's output shape
+<<<<<<< HEAD
         self.output_shape = (self.input_shape[0], self.units, 1)
+=======
+        self.output_shape = (self.units, 1)
+>>>>>>> refs/remotes/origin/master
 
     def init_layer(self, input_shape = None):
         # set the input shapes
         self.set_input_shape(input_shape = input_shape)
 
+<<<<<<< HEAD
         # print(self.name, "input_shape = ", self.input_shape, sep = " ")
 
         # initialize the weight and bias matrices
@@ -68,6 +81,13 @@ class Dense(Layer):
         self.weights = self.weights.astype(np.float16)
 
         self.bias = np.zeros((self.units, ), dtype = np.float16)
+=======
+        print(self.name, "input_shape = ", self.input_shape, sep = " ")
+
+        # initialize the weight and bias matrices
+        self.weights = np.random.randn(self.units, self.input_shape[0])
+        self.bias = np.zeros((self.units, 1))
+>>>>>>> refs/remotes/origin/master
 
         # set the output shapes
         self.set_output_shape()
@@ -75,11 +95,19 @@ class Dense(Layer):
         # set the layer's gradients
         self.set_gradients()
 
+<<<<<<< HEAD
         # print(self.name, "output_shape = ", self.output_shape, sep = " ")
 
     def forward_call(self, input):
         # calculate the output
         output = np.add(np.dot(input, self.weights.T), self.bias)
+=======
+        print(self.name, "output_shape = ", self.output_shape, sep = " ")
+
+    def forward_call(self, input):
+        # calculate the output
+        output = np.add(np.dot(self.weights, input), self.bias)
+>>>>>>> refs/remotes/origin/master
 
         # initialize the layer's cache
         self.cache = (input, output)
@@ -91,6 +119,7 @@ class Dense(Layer):
         # extract the values from the cache
         (A_prev, z) = self.cache
 
+<<<<<<< HEAD
         # calculate the total numbers of examples
         m = input.shape[0]
 
@@ -105,6 +134,18 @@ class Dense(Layer):
         # print("[INFO] Mean of backprop gradient at layer {}: {}".format(self.name, np.mean(output)))
         return output
 
+=======
+        # calculate the gradients
+        output = np.dot(self.weights.T, input)
+        self.gradients["W"] = np.dot(input, A_prev.T)
+        self.gradients["b"] = input
+
+        # return the calculated value
+        print("[INFO] backprop output shape at layer {}: {}".format(self.name, output.shape))
+        return output
+
+
+>>>>>>> refs/remotes/origin/master
 class Flatten(Layer):
     """
     Flattens the input along the axis specified.
@@ -116,17 +157,29 @@ class Flatten(Layer):
     def set_output_shape(self):
         # calculate the total number of elements in the input tensor
         total_elts = 1
+<<<<<<< HEAD
         for elts in self.input_shape[1:]:
             total_elts = total_elts * elts
 
         # set the layer's output shape
         self.output_shape = (self.input_shape[0], total_elts)
+=======
+        for elts in self.input_shape:
+            total_elts = total_elts * elts
+
+        # set the layer's output shape
+        self.output_shape = (total_elts, 1)
+>>>>>>> refs/remotes/origin/master
 
     def init_layer(self, input_shape = None):
         # set the input shapes
         self.set_input_shape(input_shape)
 
+<<<<<<< HEAD
         # print(self.name, "input_shape = ", self.input_shape, sep = " ")
+=======
+        print(self.name, "input_shape = ", self.input_shape, sep = " ")
+>>>>>>> refs/remotes/origin/master
 
         # initialize the weight and bias matrices
         self.weights = None
@@ -138,6 +191,7 @@ class Flatten(Layer):
         # set the layer's gradients
         self.set_gradients()
 
+<<<<<<< HEAD
         # print(self.name, "output_shape = ", self.output_shape, sep = " ")
 
     def forward_call(self, input):
@@ -288,12 +342,19 @@ class PostConvReshape(Layer):
         np.swapaxes(input, 0, 1)
 
         # reshape the 1D output of the convolutional layer into 2D output
+=======
+        print(self.name, "output_shape = ", self.output_shape, sep = " ")
+
+    def forward_call(self, input):
+        # reshape the input tensor
+>>>>>>> refs/remotes/origin/master
         output = np.reshape(input, self.output_shape)
 
         # return the calculated value
         return output
 
     def backward_call(self, input):
+<<<<<<< HEAD
         # swap the first two axes in the input
         np.swapaxes(input, 0, 1)
 
@@ -444,3 +505,12 @@ class PostPoolReshape(Layer):
 
         # return the calculated value
         return output
+=======
+        # reshape the input tensor
+        output = np.reshape(input, self.input_shape)
+
+        # return the calculated value
+        print("[INFO] backprop output shape at layer {}: {}".format(self.name, output.shape))
+        return output
+
+>>>>>>> refs/remotes/origin/master

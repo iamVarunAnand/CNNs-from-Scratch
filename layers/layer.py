@@ -41,6 +41,7 @@ class Layer(ABC):
             self.gradients["W"] = None
             self.gradients["b"] = None
 
+<<<<<<< HEAD
     def update_weights(self, lr):
         # update the layer weights
         try:
@@ -49,6 +50,8 @@ class Layer(ABC):
         except:
             pass
 
+=======
+>>>>>>> refs/remotes/origin/master
     @abstractmethod
     def set_output_shape(self):
         pass

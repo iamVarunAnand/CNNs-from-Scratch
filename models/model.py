@@ -1,7 +1,11 @@
 # import the necessary packages
 from .network import Network
 import numpy as np
+<<<<<<< HEAD
 import progressbar
+=======
+
+>>>>>>> refs/remotes/origin/master
 
 class Model(Network):
     def __init__(self):
@@ -11,16 +15,27 @@ class Model(Network):
         # initialize all model attributes
         self.metrics = {}
         self.loss = None
+<<<<<<< HEAD
         self.lr = None
+=======
+        self.optimizer = None
+>>>>>>> refs/remotes/origin/master
 
     def add(self, layer):
         # append the layer object to layer list
         self.add_to_network(layer)
 
+<<<<<<< HEAD
     def compile(self, loss, lr, metrics):
         # set the model loss and optimizer
         self.loss = loss
         self.lr = lr
+=======
+    def compile(self, loss, optimizer, metrics):
+        # set the model loss and optimizer
+        self.loss = loss
+        self.optimizer = optimizer
+>>>>>>> refs/remotes/origin/master
 
         # build the network
         self.build_network()
@@ -32,6 +47,7 @@ class Model(Network):
         for metric_name in metrics:
             self.metrics[metric_name] = []
 
+<<<<<<< HEAD
     def summary(self):
         self.visualize_network()
 
@@ -88,5 +104,15 @@ class Model(Network):
             print("[INFO] loss after epoch {} = {}".format(epoch + 1, self.metrics["loss"][epoch]))
 
 
+=======
+    def fit(self, x_train, y_train):
+        output = self.forward_pass(x_train)
+        print("[INFO] After forward pass, output shape: {}".format(output.shape))
+        output = self.backward_pass(output)
+
+
+        print("[INFO] final output shape: {}".format(output.shape))
+        # print("[INFO] final output: {}".format(output))
+>>>>>>> refs/remotes/origin/master
 
     # def predict(self):

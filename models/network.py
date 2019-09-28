@@ -1,5 +1,9 @@
 # import the necessary packages
+<<<<<<< HEAD
 from layers.core import *
+=======
+
+>>>>>>> refs/remotes/origin/master
 
 class Node:
     """
@@ -35,6 +39,7 @@ class Network:
         self.nodes = []
 
     def add_to_network(self, layer):
+<<<<<<< HEAD
         # check if the current layer is Conv2D
         if layer.__class__.__name__ == "Conv2D":
             # initialize the pre-reshape layer
@@ -72,6 +77,10 @@ class Network:
         else:
             # append the layer to the layer list
             self.layer_list.append(layer)
+=======
+        # append the layer to the layer list
+        self.layer_list.append(layer)
+>>>>>>> refs/remotes/origin/master
 
     def build_network(self):
         """
@@ -103,12 +112,15 @@ class Network:
             except:
                 node.layer.init_layer()
 
+<<<<<<< HEAD
     def visualize_network(self):
         # loop over all the nodes in the network
         for node in self.nodes:
             print("[INFO] {} input_shape: {}, output_shape: {}".
                   format(node.layer.name, node.layer.input_shape, node.layer.output_shape))
 
+=======
+>>>>>>> refs/remotes/origin/master
     def forward_pass(self, x_train):
         # loop over all the nodes in the graph for the forward pass
         output = x_train
@@ -118,6 +130,7 @@ class Network:
         return output
 
     def backward_pass(self, input):
+<<<<<<< HEAD
         # loop over all the nodes (except softmax) in the graph for the backward pass
         output = input
         for node in reversed(self.nodes[:-1]):
@@ -129,3 +142,11 @@ class Network:
         # loop over all the nodes in the graph to update the layer weights
         for node in self.nodes:
             node.layer.update_weights(lr)
+=======
+        # loop over all the nodes in the graph for the forward pass
+        output = input
+        for node in reversed(self.nodes):
+            output = node.layer.backward_call(output)
+
+        return output
+>>>>>>> refs/remotes/origin/master
