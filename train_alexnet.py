@@ -1,7 +1,7 @@
 # import the necessary packages
 from keras.datasets import mnist
 from sklearn.preprocessing import LabelBinarizer
-from conv import LeNet
+from conv import AlexNet
 import numpy as np
 
 # load the dataset
@@ -18,9 +18,9 @@ lb = LabelBinarizer()
 y_train = lb.fit_transform(y_train)
 
 # initialize the model
-model = LeNet.build(28, 28, 1, 10, batch_size = 128)
+model = AlexNet.build(28, 28, 1, 10, batch_size = 128)
 model.compile(loss = "categorical_crossentropy", lr = 0.01, metrics = ["loss", "accuracy"])
 model.summary()
 
 # train the model
-model.fit(x_train[:2048], y_train[:2048], batch_size = 128, epochs = 5)
+model.fit(x_train[:128], y_train[:128], batch_size = 128, epochs = 1)
