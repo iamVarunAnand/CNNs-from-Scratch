@@ -23,4 +23,4 @@ model.compile(loss = "categorical_crossentropy", lr = 0.01, metrics = ["loss", "
 model.summary()
 
 # train the model
-model.fit(x_train[:128], y_train[:128], batch_size = 128, epochs = 1)
+model.fit(x_train, y_train, batch_size = 128, epochs = 3)

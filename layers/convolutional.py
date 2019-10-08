@@ -99,21 +99,6 @@ class Conv2D(Layer):
         self.gradients["W"] += (1 / m) * np.sum(np.multiply(inpt, cache), axis = 0)
         self.gradients["b"] += (1 / m) * np.sum(np.squeeze(inpt), axis = 0, keepdims = True).T
 
-        # # extract the sub prev
-        # sub_prev = A_prev[:, h_start : h_end, w_start : w_end, :]
-        #
-        # # reshape and expand the sub prev to suit multiplication
-        # sub_prev = sub_prev[:, np.newaxis, :, :, :]
-        #
-        # self.gradients["W"] += (1 / m) * np.sum(np.multiply(sub_prev, sub_input), axis = 0)
-        # self.gradients["b"] += (1 / m) * np.sum(np.squeeze(sub_input), axis = 0,
-        #                                         keepdims = True).T
-        #
-        # # remove the padding
-        # output = output_pad[:, ho : -ho, wo : -wo, :]
-
-        # print("[INFO] backprop output shape at layer {}: {}".format(self.name, output.shape))
-        # print("[INFO] Mean of backprop gradient at layer {}: {}".format(self.name, np.mean(output)))
         return output
 
     def backward_call(self, input):
